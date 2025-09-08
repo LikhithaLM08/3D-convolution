@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include<printf.h>
+#define IN_SIZE 5
+#define KERNEL_SIZE 3
+#define OUT_SIZE (IN_SIZE - KERNEL_SIZE + 1)
+
+int main() {
+    int input[IN_SIZE][IN_SIZE][IN_SIZE] = {
+        {
+            {1, 2, 3, 4, 5},
+            {6, 7, 8, 9, 10},
+            {11, 12, 13, 14, 15},
+            {16, 17, 18, 19, 20},
+            {21, 22, 23, 24, 25}
+        },
+        {
+            {2, 3, 4, 5, 6},
+            {7, 8, 9, 10, 11},
+            {12, 13, 14, 15, 16},
+            {17, 18, 19, 20, 21},
+            {22, 23, 24, 25, 26}
+        },
+        {
+            {3, 4, 5, 6, 7},
+            {8, 9, 10, 11, 12},
+            {13, 14, 15, 16, 17},
+            {18, 19, 20, 21, 22},
+            {23, 24, 25, 26, 27}
+        },
+        {
+            {4, 5, 6, 7, 8},
+            {9, 10, 11, 12, 13},
+            {14, 15, 16, 17, 18},
+            {19, 20, 21, 22, 23},
+            {24, 25, 26, 27, 28}
+        },
+        {
+{5, 6, 7, 8, 9},
+            {10, 11, 12, 13, 14},
+            {15, 16, 17, 18, 19},
+            {20, 21, 22, 23, 24},
+            {25, 26, 27, 28, 29}
+        }
+    };
+
+    int kernel[KERNEL_SIZE][KERNEL_SIZE][KERNEL_SIZE] = {
+        {
+            {1, 0, -1},
+            {1, 0, -1},
+            {1, 0, -1}
+        },
+        {
+            {0, 1, 0},
+            {0, 1, 0},
+            {0, 1, 0}
+        },
+        {
+            {-1, 0, 1},
+            {-1, 0, 1},
+            {-1, 0, 1}
+        }
+    };
+
+    int output[OUT_SIZE][OUT_SIZE][OUT_SIZE] = {0};
+        // 3D Convolution
+    for (int d = 0; d < OUT_SIZE; d++) {
+        for (int h = 0; h < OUT_SIZE; h++) {
+            for (int w = 0; w < OUT_SIZE; w++) {
+                int sum = 0;
+for (int kd = 0; kd < KERNEL_SIZE; kd++) {
+                    for (int kh = 0; kh < KERNEL_SIZE; kh++) {
+                        for (int kw = 0; kw < KERNEL_SIZE; kw++) {
+                            sum += input[d + kd][h + kh][w + kw] * kernel[kd][kh][kw];
+                        }
+                    }
+                }
+                output[d][h][w] = sum;
+            }
+        }
+    }
+
+    // Print Output Volume
+    printf("Output Volume (3x3x3):\n");
+    for (int d = 0; d < OUT_SIZE; d++) {
+        printf("Depth %d:\n", d);
+        for (int h = 0; h < OUT_SIZE; h++) {
+            for (int w = 0; w < OUT_SIZE; w++) {
+                printf("%4d ", output[d][h][w]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+            
